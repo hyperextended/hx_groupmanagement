@@ -176,7 +176,7 @@ local function chooseBossGroup()
             return a.label < b.label
         end)
 
-        local result = lib.inputDialog('Choose Group', {
+        local result = lib.inputDialog('Choose Group to Manage', {
             { type = 'select', options = options }
         })
 

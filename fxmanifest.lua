@@ -6,7 +6,7 @@ game         'gta5'
 
 --[[ Resource Information ]]--
 name         'hx_groupmanagement'
-version      '0.1.0'
+version      '0.2.0'
 author       'Hyperextended'
 repository   'https://github.com/hyperextended/hx_groupmangement'
 

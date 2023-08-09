@@ -2,7 +2,7 @@ lib.callback.register('environment:getGroupMembers', function(source, groupName)
     local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
     local group = GlobalState[('group.%s'):format(groupName)]
 
-    if not player.hasGroup(group.name, group.adminGrade) then return false end
+    if not player.hasGroup({[group.name] = group.adminGrade}) then return false end
 
     return MySQL.query.await('SELECT character_groups.grade AS grade, character_groups.charid AS charid, CONCAT(characters.firstname, " ", characters.lastname) AS fullName FROM character_groups LEFT JOIN characters ON character_groups.charid = characters.charid WHERE character_groups.name = ?', {groupName})
 end)
@@ -11,7 +11,7 @@ RegisterServerEvent('environment:updateMembers', function(data)
     local group = GlobalState[('group.%s'):format(data.group)]
     local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
 
-    if not player.hasGroup(group.name, group.adminGrade) then return end
+    if not player.hasGroup({[group.name] = group.adminGrade}) then return end
 
     local updateMembers = {}
     local removeMembers = {}
@@ -45,7 +45,7 @@ RegisterServerEvent('environment:inviteMember', function(data)
     local group = GlobalState[('group.%s'):format(data.group)]
     local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
 
-    if not player.hasGroup(group.name, group.adminGrade) then return end
+    if not player.hasGroup({[group.name] = group.adminGrade}) then return end
 
     local target = Ox.GetPlayer(data.id) --[[@as OxPlayer]]
 
@@ -64,7 +64,7 @@ lib.callback.register('environment:getInvitees', function(source, groupName)
     local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
     local group = GlobalState[('group.%s'):format(groupName)]
 
-    if not player.hasGroup(group.name, group.adminGrade) then return false end
+    if not player.hasGroup({[group.name] = group.adminGrade}) then return false end
 
     local invitees = {}
     local playerPos = player.getCoords()

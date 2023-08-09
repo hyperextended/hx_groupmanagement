@@ -1,5 +1,5 @@
 lib.callback.register('environment:getGroupMembers', function(source, groupName)
-    local player = Ox.GetPlayer(source)
+    local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
     local group = GlobalState[('group.%s'):format(groupName)]
 
     if not player.hasGroup(group.name, group.adminGrade) then return false end
@@ -9,7 +9,7 @@ end)
 
 RegisterServerEvent('environment:updateMembers', function(data)
     local group = GlobalState[('group.%s'):format(data.group)]
-    local player = Ox.GetPlayer(source)
+    local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
 
     if not player.hasGroup(group.name, group.adminGrade) then return end
 
@@ -43,11 +43,11 @@ end)
 
 RegisterServerEvent('environment:inviteMember', function(data)
     local group = GlobalState[('group.%s'):format(data.group)]
-    local player = Ox.GetPlayer(source)
+    local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
 
     if not player.hasGroup(group.name, group.adminGrade) then return end
 
-    local target = Ox.GetPlayer(data.id)
+    local target = Ox.GetPlayer(data.id) --[[@as OxPlayer]]
 
     local response = lib.callback.await('environment:groupInvitation', target.source, {
         group = group.name,
@@ -61,7 +61,7 @@ RegisterServerEvent('environment:inviteMember', function(data)
 end)
 
 lib.callback.register('environment:getInvitees', function(source, groupName)
-    local player = Ox.GetPlayer(source)
+    local player = Ox.GetPlayer(source) --[[@as OxPlayer]]
     local group = GlobalState[('group.%s'):format(groupName)]
 
     if not player.hasGroup(group.name, group.adminGrade) then return false end

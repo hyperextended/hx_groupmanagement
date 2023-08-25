@@ -4,7 +4,7 @@ lib.callback.register('environment:getGroupMembers', function(source, groupName)
 
     if not player.hasGroup({[group.name] = group.adminGrade}) then return false end
 
-    return MySQL.query.await('SELECT character_groups.grade AS grade, character_groups.charid AS charid, CONCAT(characters.firstname, " ", characters.lastname) AS fullName FROM character_groups LEFT JOIN characters ON character_groups.charid = characters.charid WHERE character_groups.name = ?', {groupName})
+    return MySQL.query.await('SELECT character_groups.grade AS grade, character_groups.charId AS charId, CONCAT(characters.firstname, " ", characters.lastname) AS fullName FROM character_groups LEFT JOIN characters ON character_groups.charId = characters.charId WHERE character_groups.name = ?', {groupName})
 end)
 
 RegisterServerEvent('environment:updateMembers', function(data)
@@ -17,7 +17,7 @@ RegisterServerEvent('environment:updateMembers', function(data)
     local removeMembers = {}
 
     for id, grade in pairs(data.members) do
-        local member = Ox.GetPlayerByFilter({charid = id})
+        local member = Ox.GetPlayerByFilter({charId = id})
 
         if member then
             if member.getGroup(group.name) ~= grade then
@@ -33,11 +33,11 @@ RegisterServerEvent('environment:updateMembers', function(data)
     end
 
     if next(updateMembers) then
-        MySQL.prepare('UPDATE character_groups SET grade = ? WHERE charid = ? AND name = ?', updateMembers)
+        MySQL.prepare('UPDATE character_groups SET grade = ? WHERE charId = ? AND name = ?', updateMembers)
     end
 
     if next(removeMembers) then
-        MySQL.prepare('DELETE FROM character_groups WHERE charid = ? and name = ?', removeMembers)
+        MySQL.prepare('DELETE FROM character_groups WHERE charId = ? and name = ?', removeMembers)
     end
 end)
 

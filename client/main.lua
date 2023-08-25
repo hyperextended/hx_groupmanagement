@@ -63,7 +63,7 @@ local function openBossMenu(name)
                             defaultIndex = member.grade + 1,
                             close = false,
                             args = {
-                                charid = member.charid
+                                charId = member.charId
                             }
                         }
                     end
@@ -84,7 +84,7 @@ local function openBossMenu(name)
                 title = 'Manage Members',
                 options = options,
                 onSideScroll = function(selected, secondary, args)
-                    memberData[args.charid] = secondary - 1
+                    memberData[args.charId] = secondary - 1
                 end,
                 onClose = onClose
             },

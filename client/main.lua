@@ -47,25 +47,27 @@ local function openBossMenu(name)
             table.insert(grades, 1, 'Remove')
 
             local options = {}
+	    local groupName = 'group.'..group.name
 
-            for i = group.adminGrade, 1, -1 do
+            for i = #GlobalState[groupName].grades, 1, -1 do
                 local gradeGroup = memberGrades[i]
 
                 if gradeGroup then
                     table.sort(gradeGroup, sortAscending)
-
-                    for j = 1, #gradeGroup do
-                        local member = gradeGroup[j]
-
-                        options[#options + 1] = {
-                            label = member.fullName,
-                            values = grades,
-                            defaultIndex = member.grade + 1,
-                            close = false,
-                            args = {
-                                charId = member.charId
+                    if not (member.charId == player.charId) then
+                        for j = 1, #gradeGroup do
+                            local member = gradeGroup[j]
+    
+                            options[#options + 1] = {
+                                label = member.fullName,
+                                values = grades,
+                                defaultIndex = member.grade + 1,
+                                close = false,
+                                args = {
+                                    charId = member.charId
+                                }
                             }
-                        }
+                        end
                     end
                 end
             end

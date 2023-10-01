@@ -25,7 +25,7 @@ RegisterServerEvent('environment:updateMembers', function(data)
             end
         else
             if grade == 0 then
-                removeMembers[#removeMembers + 1] = {id, group}
+                removeMembers[#removeMembers + 1] = {id, group.name}
             else
                 updateMembers[#updateMembers + 1] = {grade, id, group.name}
             end
